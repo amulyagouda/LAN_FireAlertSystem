@@ -1,0 +1,215 @@
+/* client_v3.css - Professional, Dark Minimalist Theme with Map Support */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: #f0f3f6; 
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    max-width: 550px; 
+    width: 100%;
+    overflow: hidden;
+}
+
+/* === HEADER === */
+.header {
+    background: #2c3e50; 
+    color: white;
+    padding: 25px 20px 20px;
+    text-align: center;
+}
+
+.header h1 {
+    font-size: 26px;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.header p {
+    color: #bdc3c7; 
+    font-size: 14px;
+}
+
+/* === CONNECTION STATUS === */
+.status-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.status-connected {
+    background: #3498db; 
+}
+
+.status-disconnected {
+    background: #e74c3c; 
+}
+
+.content {
+    padding: 25px;
+}
+
+/* === ALERT BOX === */
+.alert-box {
+    display: none;
+    background: #fbe6e6; 
+    border: 2px solid #e74c3c; 
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 25px;
+    animation: pulse 1s infinite;
+}
+
+.alert-box.active {
+    display: block;
+}
+
+@keyframes pulse {
+    0%, 100% { border-color: #e74c3c; box-shadow: 0 0 10px rgba(231, 76, 60, 0.7); }
+    50% { border-color: #c0392b; box-shadow: none; }
+}
+
+.alert-box h2 {
+    color: #c0392b; 
+    font-size: 20px;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.alert-box p {
+    color: #8c2a2a;
+    font-size: 14px;
+}
+
+/* === EVACUATION MAP DISPLAY (NEW) === */
+.evacuation-map {
+    display: none; /* Initially hidden */
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 2px solid #f39c12; /* Muted orange border for notice */
+}
+
+.evacuation-map.active {
+    display: block;
+}
+
+.evacuation-map h3 {
+    color: #f39c12;
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.evacuation-map img {
+    width: 100%;
+    max-height: 400px; /* Limit map size */
+    object-fit: contain;
+    border-radius: 4px;
+    border: 1px solid #e9ecef;
+}
+
+/* === STATUS BUTTONS === */
+.status-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.btn {
+    padding: 15px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: white; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.btn-safe { background: #2ecc71; }
+.btn-help { background: #e74c3c; }
+.btn-injured { background: #f39c12; }
+.btn-trapped { background: #9b59b6; }
+
+
+/* === MESSAGES SECTION === */
+.messages-section {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 15px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.messages-section h3 {
+    margin-bottom: 10px;
+    color: #34495e;
+    font-size: 16px;
+}
+
+.message {
+    background: white;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    border-left: 3px solid #bdc3c7; 
+}
+
+.message.admin {
+    border-left-color: #3498db; 
+}
+
+.message .timestamp {
+    font-size: 11px;
+    color: #95a5a6;
+    margin-bottom: 3px;
+}
+
+.message .text {
+    color: #1f2937;
+    font-size: 14px;
+}
+
+/* === INFO BOX === */
+.info-box {
+    background: #eaf3f8; 
+    border-left: 4px solid #3498db; 
+    padding: 15px;
+    border-radius: 4px;
+    margin-top: 15px;
+}
+
+.info-box p {
+    color: #2c3e50;
+    font-size: 13px;
+}

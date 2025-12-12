@@ -1,0 +1,27 @@
+# --- General ---
+.DS_Store
+Thumbs.db
+*.log
+
+# --- Mobile App (React Native) ---
+mobile-app/FireEmergencyApp/node_modules/
+mobile-app/FireEmergencyApp/android/app/build/
+mobile-app/FireEmergencyApp/android/.gradle/
+mobile-app/FireEmergencyApp/ios/build/
+mobile-app/FireEmergencyApp/ios/Pods/
+
+# --- Server (Python) ---
+server/Server-Receiver/__pycache__/
+server/Server-Receiver/*.pyc
+server/Server-Receiver/venv/
+server/Server-Receiver/env/
+
+# --- Hardware (PlatformIO) ---
+hardware/FireDetectionNode/.pio/
+
+# --- SECURITY (NEVER UPLOAD THESE) ---
+server/Server-Receiver/serviceAccountKey (2).json
+mobile-app/FireEmergencyApp/android/app/google-services.json
+*.pem
+*.key
+.env
