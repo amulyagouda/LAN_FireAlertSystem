@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>🚨 Emergency Response</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #c0392b 0%, #8e44ad 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #95a5a6;
+            animation: pulse 2s infinite;
+        }
+
+        .status-indicator.connected {
+            background: #2ecc71;
+        }
+
+        .status-indicator.disconnected {
+            background: #e74c3c;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Alert Banner */
+        .alert-banner {
+            background: #e74c3c;
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            display: none;
+            animation: shake 0.5s;
+            box-shadow: 0 5px 20px rgba(231, 76, 60, 0.5);
+        }
+
+        .alert-banner.active {
+            display: block;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+            20%, 40%, 60%, 80% { transform: translateX(10px); }
+        }
+
+        .alert-banner h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .alert-banner p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* Status Card */
+        .status-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .status-card h3 {
+            color: #2c3e50;
+            font-size: 16px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-message {
+            color: #7f8c8d;
+            font-size: 14px;
+            line-height: 1.6;
+            padding: 15px;
+            background: #ecf0f1;
+            border-radius: 10px;
+            border-left: 4px solid #3498db;
+        }
+
+        .status-message.alert {
+            background: #ffe6e6;
+            border-left-color: #e74c3c;
+            color: #c0392b;
+        }
+
+        /* Map Display */
+        .map-container {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .map-container h3 {
+            color: #2c3e50;
+            font-size: 16px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .map-display {
+            width: 100%;
+            min-height: 200px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #95a5a6;
+            font-size: 14px;
+            overflow: hidden;
+        }
+
+        .map-display img {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+        }
+
+        /* Status Buttons */
+        .status-buttons {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .status-buttons h3 {
+            color: #2c3e50;
+            font-size: 16px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .button-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .status-btn {
+            border: none;
+            padding: 20px;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-btn:active {
+            transform: scale(0.95);
+        }
+
+        .status-btn.safe {
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+        }
+
+        .status-btn.help {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+        }
+
+        .status-btn.injured {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+        }
+
+        .status-btn.trapped {
+            background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+        }
+
+        .status-btn .icon {
+            font-size: 24px;
+        }
+
+        .status-btn .label {
+            font-size: 14px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            color: white;
+            font-size: 12px;
+            padding: 20px;
+            opacity: 0.8;
+        }
+
+        /* Notification Permission Button */
+        .notification-prompt {
+            background: #f39c12;
+            color: white;
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(243, 156, 18, 0.4);
+        }
+
+        .notification-prompt.hidden {
+            display: none;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>
+                <span>🚨</span>
+                Emergency Response
+                <span class="status-indicator" id="connectionStatus"></span>
+            </h1>
+            <p id="connectionText">Connecting...</p>
+        </div>
+
+        <!-- Notification Permission Prompt -->
+        <div class="notification-prompt" id="notificationPrompt" onclick="requestNotificationPermission()">
+            <strong>🔔 Enable Notifications</strong>
+            <p style="font-size: 12px; margin-top: 5px;">Get instant alerts for emergencies</p>
+        </div>
+
+        <!-- Alert Banner -->
+        <div class="alert-banner" id="alertBanner">
+            <h2>🔥 FIRE ALERT!</h2>
+            <p id="alertMessage">Emergency detected. Report your status immediately!</p>
+        </div>
+
+        <!-- Status Card -->
+        <div class="status-card">
+            <h3>📋 Current Status</h3>
+            <div class="status-message" id="statusMessage">
+                Awaiting connection to emergency server...
+            </div>
+        </div>
+
+        <!-- Map Display -->
+        <div class="map-container">
+            <h3>📍 Evacuation Map</h3>
+            <div class="map-display" id="mapDisplay">
+                No map available yet
+            </div>
+        </div>
+
+        <!-- Status Buttons -->
+        <div class="status-buttons">
+            <h3>⚡ Report Your Status</h3>
+            <div class="button-grid">
+                <button class="status-btn safe" onclick="sendStatus('SAFE')">
+                    <span class="icon">✅</span>
+                    <span class="label">I'm Safe</span>
+                </button>
+                <button class="status-btn help" onclick="sendStatus('NEED_HELP')">
+                    <span class="icon">⚠️</span>
+                    <span class="label">Need Help</span>
+                </button>
+                <button class="status-btn injured" onclick="sendStatus('INJURED')">
+                    <span class="icon">🩹</span>
+                    <span class="label">Injured</span>
+                </button>
+                <button class="status-btn trapped" onclick="sendStatus('TRAPPED')">
+                    <span class="icon">🚪</span>
+                    <span class="label">Trapped</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            Keep this page open during emergencies<br>
+            <small>Emergency Communication System</small>
+        </div>
+    </div>
+
+    <!-- Audio Elements -->
+    <audio id="alertSound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBTGH0fPTgjMGHm239eGXSQ0PVqzn77BdGAg+ltryxnMpBSl+zPLaizsIHGS57+KYSg0QWK7n77BdGAg+ltryxnMpBSl+zPLaizsIHGS57+KYSg0QWK7n77BdGAg+ltryxnMpBSl+zPLaizsIHGS57+KYSg0QWK7n77BdGAg+ltryxnMpBSl+zPLaizsIHGS57+KYSg0QWK7n77BdGAg+ltryxnMpBSl+zPLaizsIHGS57+KYSg0QWK7n77BdGAg+ltryxnMpBSl+zPLaizsIHGS57+KYSg0QWK7n77BdGAg+ltryxnMpBSl+zPLaizsIHGS57+KYSg0QWK7n77BdGAg+ltryxnMpBSl+zPLaizsIHGS57+KYSg0QWK7n77BdGAg+ltryxnMpBSl+zPLaizsIHGS57+KYSg0QWK7n77BdGAg+ltryxnMpBSl+zPLaizsIHGS57+KYSg0QWK7n77BdGAg+ltryxnMpBSl+zPLaizsIHGS57+KYSg0QWK7n77BdGAg+ltryxnMpBSl+zPLaizsIHGS57+KYSg0QWK7n77BdGAg+ltryxnMpBSl+zPLaizsIHGS57+KYSg0QWK7n77BdGAg+ltryxnMpBSl+zPLaizsIHGS57+KYSg0QWK7n77BdGAg+ltryxnMpBSl+zPLaizsIHGS57+KYSg0QWK7n77BdGAg+ltryxnMpBSl+zPLaizsIHGS57+KYSg0QWK7n77BdGAg+ltryxnMpBSl+zPLaizsIHGS57+KYSg0QWK7n77BdGAg+ltryxnMpBSl+zPLaizsIHGS57+KYSg0QWK7n77BdGAg+ltryxnMpBSl+zPLaizsIHGS57+KYSg0QWK7n77BdGAg+ltryxnMpBSl+zPLaizsIHGS57+KYSg0QWK7n77BdGAg+ltryxnMpBSl+zPLaizsIHGS57+KYSg==" type="audio/wav">
+    </audio>
+
+    <script src="/static/mobile.js"></script>
+</body>
+</html>

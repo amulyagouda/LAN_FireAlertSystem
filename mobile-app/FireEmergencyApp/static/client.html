@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fire Emergency System - Client</title>
+    <link rel="stylesheet" href="/static/client_v2.css"> 
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔥 Fire Emergency System</h1>
+            <p>Occupant Dashboard</p>
+            <span class="status-badge status-disconnected" id="statusBadge">Disconnected</span>
+        </div>
+
+        <div class="content">
+            <div class="alert-box" id="alertBox">
+                <h2>
+                    🚨 FIRE EMERGENCY
+                </h2>
+                <p id="alertMessage">Fire detected! Please evacuate immediately and follow safety procedures.</p>
+            </div>
+
+            <div class="evacuation-map" id="evacuationMapContainer">
+                <h3>🗺️ Evacuation Map Sent</h3>
+                <img id="mapImage" src="" alt="Evacuation Map" />
+                <p style="margin-top: 10px; font-size: 13px; color: #6c757d;">Follow the highlighted evacuation routes.</p>
+            </div>
+            
+            <div class="status-buttons">
+                <button class="btn btn-safe" onclick="sendStatus('SAFE')">
+                    ✓ I'm Safe
+                </button>
+                <button class="btn btn-help" onclick="sendStatus('NEED_HELP')">
+                    ⚠ Need Help
+                </button>
+                <button class="btn btn-injured" onclick="sendStatus('INJURED')">
+                    🩹 Injured
+                </button>
+                <button class="btn btn-trapped" onclick="sendStatus('TRAPPED')">
+                    🚪 Trapped
+                </button>
+            </div>
+
+            <div class="messages-section">
+                <h3>📢 Messages & Instructions</h3>
+                <div id="messagesList">
+                    <p style="color: #9ca3af; text-align: center;">No messages yet</p>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <p><strong>Instructions:</strong> Use the buttons above to report your status. Listen for admin instructions and follow evacuation procedures.</p>
+            </div>
+        </div>
+    </div>
+
+    <audio id="alarmSound" loop>
+        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBTGH0fPTgjMGHm7A7+OZSA0PVqzn77BdGAg+ltryxm8gBS+A0fLaizsIGGS76+adTAwOUKXi8bllHAU9j9fyz3cqBSl+zPLaiTsIF2i67OWdTQwOUqfj8bllHAU9j9fyz3cqBSl+zPLaiTsIF2i67OWdTQwOUqfj8bllHAU9j9fyz3cqBSl+zPLaiTsIF2i67OWdTQwOUqfj8bllHAU9j9fyz3cqBSl+zPLaiTsIF2i67OWdTQwOUqfj8bllHAU9j9fyz3cqBSl+zPLaiTsIF2i67OWdTQwOUqfj8bllHAU9j9fyz3cqBSl+zPLaiTsIF2i67OWdTQwOUqfj8bllHAU9j9fyz3cqBSl+zPLaiTsIF2i67OWdTQwOUqfj8bllHAU9j9fyz3cqBSl+zPLaiTsIF2i67OWdTQwOUqfj8bllHAU9j9fyz3cqBSl+zPLaiTsIF2i67OWdTQwOUqfj8bllHAU9j9fyz3cqBSl+zPLaiTsIF2i67OWdTQwO" type="audio/wav">
+    </audio>
+
+    <script src="/static/client.js"></script>
+</body>
+</html>

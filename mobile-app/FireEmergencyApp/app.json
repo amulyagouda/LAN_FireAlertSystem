@@ -1,0 +1,9 @@
+{
+  "name": "FireEmergencyApp",
+  "displayName": "FireEmergencyApp",
+  "react-native": {
+    "android": {
+      "packageName": "com.fireemergencyapp"
+    }
+  }
+}

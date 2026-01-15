@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fire Emergency System - Admin Dashboard</title>
+    <link rel="stylesheet" href="/static/admin.css">
+</head>
+<body>
+    <div class="login-container" id="loginContainer">
+        <div class="login-box">
+            <div class="login-header">
+                <h1>🔥 Admin Portal</h1>
+                <p>Fire Emergency Communication System</p>
+            </div>
+            <form id="loginForm" onsubmit="login(event)">
+                <div class="form-group">
+                    <label for="username">👤 Username</label>
+                    <input type="text" id="username" required placeholder="Enter admin username" autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">🔒 Password</label>
+                    <input type="password" id="password" required placeholder="Enter password" autocomplete="current-password">
+                </div>
+                <button type="submit" class="btn btn-primary">Login to Dashboard</button>
+            </form>
+            <div class="demo-credentials">
+                <p><strong>Demo Credentials:</strong></p>
+                <p>admin1 / admin123</p>
+                <p>admin2 / admin456</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard" id="dashboard">
+        <div class="header">
+            <div class="header-left">
+                <h1>Fire Emergency Admin Dashboard</h1>
+                <div class="status-indicator">
+                    <div class="status-dot"></div>
+                    <span id="connectionStatus">Disconnected</span>
+                </div>
+            </div>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+
+        <div class="alert-banner" id="alertBanner">
+            <h3>🚨 FIRE ALERT ACTIVE</h3>
+            <p id="alertBannerMessage">Fire detected by sensor. All connected clients have been notified automatically.</p>
+            <button class="btn btn-primary" onclick="sendAllClear()" style="margin-top:10px;">Send All Clear Signal</button>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <h2>📊 System Status</h2>
+                <div class="stats">
+                    <div class="stat-box">
+                        <div class="number" id="clientCount">0</div>
+                        <div class="label">Connected Users</div>
+                    </div>
+                    <div class="stat-box" id="alertStatusBox">
+                        <div class="number" id="alertStatus">Normal</div>
+                        <div class="label">System Status</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>⚡ Emergency Controls</h2>
+                <div class="control-buttons">
+                    <button class="btn btn-danger" onclick="triggerAlarm()">
+                        🚨 Trigger Manual Fire Alarm
+                    </button>
+                    <button class="btn btn-warning" onclick="sendSafetyInstructions()">
+                        ⚠️ Send Safety Instructions
+                    </button>
+                    <button class="btn btn-success" onclick="sendAllClear()">
+                        ✅ Send All Clear Signal
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <h2>👥 User Status Reports</h2>
+                <div class="user-status-list" id="userStatusList">
+                    <p style="color: #9ca3af; text-align: center; padding: 20px;">No status reports yet. Waiting for user updates...</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>📢 Broadcast to All Users</h2>
+                <div class="quick-messages">
+                    <button class="quick-msg-btn" onclick="setQuickMessage('🚪 Evacuate via Stairwell A immediately! Do NOT use elevators.')">
+                        Exit Stairwell A
+                    </button>
+                    <button class="quick-msg-btn" onclick="setQuickMessage('🅿️ Proceed to assembly point at main parking lot now.')">
+                        Go to Parking
+                    </button>
+                    <button class="quick-msg-btn" onclick="setQuickMessage('🆘 Stay calm. Emergency services have been notified and are on the way.')">
+                        Help is Coming
+                    </button>
+                    <button class="quick-msg-btn" onclick="setQuickMessage('🔥 Fire is contained on Floor 3. Remain in safe zones until further notice.')">
+                        Fire Contained
+                    </button>
+                </div>
+                <div class="broadcast-section">
+                    <textarea id="broadcastMessage" placeholder="Type your custom message to broadcast to all connected users..."></textarea>
+                    <button class="btn btn-info" style="width: 100%; margin-top: 15px;" onclick="broadcastMessage()">
+                        📡 Send Broadcast Message
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <h2>🗺️ Send Evacuation Map</h2>
+                <p style="color: #6b7280; margin-bottom: 20px; font-size: 14px;">
+                    Upload and send evacuation maps/floor plans to all users to guide them to safety.
+                </p>
+                <div class="map-upload-section">
+                    <div class="file-input-wrapper">
+                        <input type="file" id="mapInput" accept="image/*" onchange="previewMap(event)">
+                        <label for="mapInput" class="file-input-label">
+                            📁 Click to Select Evacuation Map Image
+                        </label>
+                    </div>
+                    <div class="map-preview" id="mapPreview">
+                        <img id="mapImage" alt="Evacuation Map Preview">
+                    </div>
+                    <button class="btn btn-primary" style="width: 100%; margin-top: 15px;" onclick="sendEvacuationMap()" id="sendMapBtn" disabled>
+                        🗺️ Send Evacuation Map to All Users
+                    </button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>📝 Activity Log</h2>
+                <div class="messages-log" id="activityLog">
+                    <p style="color: #9ca3af; text-align: center; padding: 20px;">System initialized. Waiting for activity...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/admin.js"></script>
+</body>
+</html>
